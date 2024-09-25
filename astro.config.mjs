@@ -7,30 +7,74 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Docs",
+      tagline: "Open Source: Video Conferencing",
       logo: {
-        light: "./src/assets/app_name_logo.png",
-        dark: "./src/assets/app_name_logo.png",
+        light: "./src/assets/logo-docs.png",
+        dark: "./src/assets/logo-docs.png",
         replacesTitle: true,
       },
+	  favicon: 'favicon.ico',
       social: {
         github: "https://github.com/waterbustech/waterbus",
         discord: "https://discord.gg/mfrWVefU",
         twitter: "https://twitter.com/waterbustech",
       },
-	  expressiveCode: {
-        themes: ['dark-plus', 'github-light'],
+      expressiveCode: {
+        themes: ["dark-plus", "github-light"],
       },
       sidebar: [
         {
-          label: "Guides",
+          label: "Overview",
+          link: "/",
+        },
+        {
+          label: "Getting Started",
+          link: "/getting-started",
+        },
+        {
+          label: "Package waterbus_sdk",
           items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example Guide", slug: "guides/example" },
+            {
+              label: "Installation",
+              link: "/sdk/installation",
+            },
+            {
+              label: "API Reference",
+              link: "/sdk/api-reference",
+            },
+            {
+              label: "Screen Sharing",
+              autogenerate: {
+                directory: "sdk/screen-sharing",
+              },
+            },
+            {
+              label: "Picture In Picture",
+              autogenerate: {
+                directory: "sdk/picture-in-picture",
+              },
+            },
+            {
+              label: "Virtual Background",
+              autogenerate: {
+                directory: "sdk/virtual-background",
+              },
+            },
           ],
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "Self hosted",
+          autogenerate: {
+			directory: "self-hosted",
+		  },
+        },
+        {
+          label: "Benchmark",
+          link: "/benchmark",
+        },
+        {
+          label: "Status",
+          link: "/status",
         },
       ],
     }),
