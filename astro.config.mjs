@@ -7,13 +7,20 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Docs",
+      components: {
+        ThemeProvider: './src/components/ThemeProvider.astro',
+        ThemeSelect: './src/components/ThemeSelect.astro'
+      },
+      customCss: [
+        './src/styles/custom.css',
+      ],
       tagline: "Open Source: Video Conferencing",
       logo: {
         light: "./src/assets/logo-docs.png",
         dark: "./src/assets/logo-docs.png",
         replacesTitle: true,
       },
-	  favicon: 'favicon.ico',
+      favicon: "favicon.ico",
       social: {
         github: "https://github.com/waterbustech/waterbus",
         discord: "https://discord.gg/mfrWVefU",
@@ -65,8 +72,8 @@ export default defineConfig({
         {
           label: "Self hosted",
           autogenerate: {
-			directory: "self-hosted",
-		  },
+            directory: "self-hosted",
+          },
         },
         {
           label: "Benchmark",

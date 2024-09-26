@@ -5,7 +5,7 @@ description: Features status
 
 | Feature            | Subscribe/Publish | Screen Sharing | Picture in Picture | Virtual Background | Beauty Filters | End to End Encryption |
 | ------------------ | ----------------- | -------------- | ------------------ | ------------------ | -------------- | --------------------- |
-| Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟡        |           🟢          | 
+| Android            |         🟢         |        🟢      |          🟢         |          🟢         |       🟢        |           🟢          | 
 | iOS                |         🟢         |        🟢      |          🟢         |          🟢         |       🟢       |           🟢          |  
 | MacOS              |         🟢         |        🟢      |          🔴         |          🟢         |       🟢       |           🟢          |      
 | Web                |         🟢         |        🟢      |          🟢         |          🟢         |       🟡       |           🟢          |    
