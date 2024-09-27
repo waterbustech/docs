@@ -1,0 +1,679 @@
+openapi: 3.0.0
+paths:
+  /busapi/v1/auth/token:
+    post:
+      operationId: AuthController_getOauthToken
+      summary: Get Oauth Token
+      description: Get Oauth token from code
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+      security:
+        - api-key:
+            - api-key
+  /busapi/v1/auth:
+    post:
+      operationId: AuthController_loginWithSocial
+      summary: Login
+      description: Login with Social Media
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginSocialDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+      security:
+        - api-key:
+            - api-key
+    get:
+      operationId: AuthController_refresh
+      summary: Refresh Token
+      description: Refresh token when access token expired
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - auth
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    delete:
+      operationId: AuthController_logout
+      summary: Logout
+      description: Terminate your session
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - auth
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/auth/presigned-url:
+    post:
+      operationId: AuthController_createS3Presigned
+      summary: Get AWS-S3 presigned url
+      description: Presigned url to upload avatar
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - auth
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/users/search:
+    get:
+      operationId: UserController_searchUsers
+      summary: Search user
+      description: Search user by username or fullname
+      parameters:
+        - name: q
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: skip
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: perPage
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - user
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/users:
+    get:
+      operationId: UserController_getById
+      summary: Fetch user info
+      description: Retrieve your info by access token
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - user
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    put:
+      operationId: UserController_updateUserInfo
+      summary: Update user info
+      description: Update your info
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserInfoDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - user
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/users/username/{userName}:
+    get:
+      operationId: UserController_checkUserNameExists
+      summary: Check username
+      description: Check username is available for change
+      parameters:
+        - name: userName
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - user
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    put:
+      operationId: UserController_updateUserName
+      summary: Update username
+      description: Update your username
+      parameters:
+        - name: userName
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - user
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/{code}:
+    get:
+      operationId: MeetingController_getRoomByCode
+      summary: Get room
+      description: Get room by id
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    delete:
+      operationId: MeetingController_leaveRoom
+      summary: Leave room
+      description: Leave out the room
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/conversations/{status}:
+    get:
+      operationId: MeetingController_getRoomsByAuth
+      summary: Get rooms by status
+      description: Get room (also known as a conversation) by status
+      parameters:
+        - name: status
+          required: true
+          in: path
+          schema: {}
+        - name: skip
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: perPage
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings:
+    post:
+      operationId: MeetingController_createRoom
+      summary: Create meeting room
+      description: Create a room with room name and password
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMeetingDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    put:
+      operationId: MeetingController_updateRoom
+      summary: Update meeting room
+      description: Update room with new info or password
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMeetingDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/members/{code}:
+    post:
+      operationId: MeetingController_addRoomMember
+      summary: Add member
+      description: Add member to the room
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUserDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    delete:
+      operationId: MeetingController_removeRoomMember
+      summary: Delete member
+      description: Kick user out the room
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUserDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/members/accept/{code}:
+    post:
+      operationId: MeetingController_acceptRoomInvitation
+      summary: Accept invitation
+      description: Accept invitation to access room as a member
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '201':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/join/password/{code}:
+    post:
+      operationId: MeetingController_joinRoomForStranger
+      summary: Join room (guest)
+      description: If you are not a room member, password is required to join
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinMeetingDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/meetings/join/{code}:
+    post:
+      operationId: MeetingController_joinRoomForMember
+      summary: Join room (member)
+      description: Join directly if you are a room member
+      parameters:
+        - name: code
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '201':
+          description: ''
+      tags:
+        - meeting
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/chats/{meetingId}:
+    get:
+      operationId: ChatController_getMessagesByMeeting
+      summary: Get messages by room
+      description: Get messages by room id
+      parameters:
+        - name: meetingId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: skip
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: perPage
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - chat
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    post:
+      operationId: ChatController_sendMessageByMeeting
+      summary: Send message
+      description: Send an encrypted message
+      parameters:
+        - name: meetingId
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - chat
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/chats/{messageId}:
+    put:
+      operationId: ChatController_editMessageById
+      summary: Update message
+      description: Update an encrypted message
+      parameters:
+        - name: messageId
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - chat
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+    delete:
+      operationId: ChatController_deleteMessageById
+      summary: Delete message
+      description: Delete message
+      parameters:
+        - name: messageId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - chat
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+  /busapi/v1/chats/conversations/{meetingId}:
+    delete:
+      operationId: ChatController_deleteConversationByMeetingId
+      summary: Delete conversation
+      description: Delete conversation only you and no one else
+      parameters:
+        - name: meetingId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - chat
+      security:
+        - api-key:
+            - api-key
+        - bearer: []
+info:
+  title: Waterbus Server API - @waterbus.tech
+  description: >-
+    Open source video conferencing app built on latest WebRTC SDK.
+    Android/iOS/MacOS/Web
+  version: '2.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: api-key
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    OauthDto:
+      type: object
+      properties:
+        code:
+          type: string
+          example: code
+        clientId:
+          type: string
+          example: client-id
+        redirectUri:
+          type: string
+          example: redirect_uri
+      required:
+        - code
+        - clientId
+        - redirectUri
+    LoginSocialDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+          example: Kai Dao
+        googleId:
+          type: string
+          nullable: true
+          example: lambiengcode
+        githubId:
+          type: string
+          nullable: true
+        appleId:
+          type: string
+          nullable: true
+      required:
+        - fullName
+    UpdateUserInfoDto:
+      type: object
+      properties:
+        fullName:
+          type: string
+          example: Kai Dao
+        bio:
+          type: string
+          example: Waterbus is an open source
+        avatar:
+          type: string
+          example: https://image.png
+      required:
+        - fullName
+        - bio
+        - avatar
+    CreateMeetingDto:
+      type: object
+      properties:
+        title:
+          type: string
+        password:
+          type: string
+      required:
+        - title
+        - password
+    UpdateMeetingDto:
+      type: object
+      properties:
+        code:
+          type: number
+        title:
+          type: string
+        password:
+          type: string
+      required:
+        - code
+        - title
+        - password
+    AddUserDto:
+      type: object
+      properties:
+        userId:
+          type: number
+      required:
+        - userId
+    JoinMeetingDto:
+      type: object
+      properties:
+        password:
+          type: string
+      required:
+        - password
+    SendMessageDto:
+      type: object
+      properties:
+        data:
+          type: string
+      required:
+        - data
